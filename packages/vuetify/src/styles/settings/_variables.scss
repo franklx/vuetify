@@ -52,7 +52,7 @@ $grid-breakpoints: map-deep-merge(
 
 $grid-gutter: $spacer * 6 !default;
 $form-grid-gutter: $spacer * 2 !default;
-$grid-columns: 12 !default;
+$grid-columns: 24 !default;
 
 $container-padding-x: $grid-gutter / 2 !default;
 
