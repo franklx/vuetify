@@ -1,4 +1,5 @@
 ---
+nav: Radio buttons
 meta:
   title: Radio button component
   description: A radio button allows the user to choose only one of a set of options using a radio group.
@@ -13,20 +14,17 @@ related:
 
 The `v-radio` component is a simple radio button. When combined with  the `v-radio-group` component you can provide groupable functionality to allow users to select from a predefined set of options.
 
-<entry-ad />
+<entry />
 
 ## Usage
 
 Although `v-radio` can be used on its own, it is best used in conjunction with `v-radio-group`. Using the **v-model** on the `v-radio-group` you can access the value of the selected radio button inside the group.
 
-<example file="v-radio-group/usage" />
+<usage name="v-radio-group" />
 
 ## API
 
-- [v-radio](/api/v-radio)
-- [v-radio-group](/api/v-radio-group)
-
-<inline-api page="components/radio-buttons" />
+<api-inline />
 
 ## Examples
 
@@ -44,12 +42,6 @@ Radio-groups can be presented either as a row or a column, using their respectiv
 
 <example file="v-radio-group/prop-direction" />
 
-#### Mandatory
-
-Radio-groups are by default not mandatory. This can be changed with the **mandatory** prop.
-
-<example file="v-radio-group/prop-mandatory" />
-
 ### Slots
 
 #### Label
@@ -57,5 +49,3 @@ Radio-groups are by default not mandatory. This can be changed with the **mandat
 Radio Group labels can be defined in `label` slot - that will allow to use HTML content.
 
 <example file="v-radio-group/slot-label" />
-
-<backmatter />

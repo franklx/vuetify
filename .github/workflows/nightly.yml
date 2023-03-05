@@ -12,7 +12,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        branch: ['master', 'dev', 'next']
+        branch: ['master', 'dev', 'next', 'v2-stable', 'v2-dev']
         include:
           - branch: 'master'
             tag: 'latest'
@@ -23,6 +23,12 @@ jobs:
           - branch: 'next'
             tag: 'next'
             preid: 'premajor'
+          - branch: 'v2-stable'
+            tag: 'v2-stable'
+            preid: 'prepatch'
+          - branch: 'v2-dev'
+            tag: 'v2-dev'
+            preid: 'preminor'
     env:
       RELEASE_BRANCH: ${{ matrix.branch }}
       RELEASE_TAG: ${{ matrix.tag }}
@@ -60,6 +66,7 @@ jobs:
           )"
         working-directory: ./packages/vuetify
       - run: yarn lerna run build --scope @vuetify/nightly
+      - run: yarn lerna run build --scope @vuetify/api-generator
       - run: ls -lah
       - name: NPM Release
         run: |
@@ -76,7 +83,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: next
+          ref: master
           fetch-depth: 0
       - run: |
           last=$(git show -s --format=%ct HEAD)
@@ -99,8 +106,8 @@ jobs:
         working-directory: ./packages/vuetify
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          PERCY_BRANCH: next
-          PERCY_TARGET_BRANCH: next
+          PERCY_BRANCH: master
+          PERCY_TARGET_BRANCH: master
           PERCY_COMMIT: ${{ env.COMMIT }}
       - uses: actions/upload-artifact@v2
         if: failure()

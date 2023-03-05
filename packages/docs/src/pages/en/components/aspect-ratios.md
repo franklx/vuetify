@@ -13,18 +13,14 @@ related:
 
 The `v-responsive` component can be used to fix any section to a specific aspect ratio
 
-<entry-ad />
+<entry />
 
 ## Usage
 
 Specify a custom aspect-ratio
 
-<example file="v-responsive/usage" />
+<usage name="v-responsive" />
 
 ## API
 
-- [v-responsive](/api/v-responsive)
-
-<inline-api page="components/aspect-ratios" />
-
-<backmatter />
+<api-inline />

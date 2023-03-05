@@ -1,6 +1,0 @@
-{
-  "props": {
-    "openDelay": "Milliseconds to wait before opening component. Only applies to hover and focus events.",
-    "closeDelay": "Milliseconds to wait before closing component. Only applies to hover and focus events."
-  }
-}

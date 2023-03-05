@@ -1,4 +1,5 @@
 ---
+nav: Range sliders
 meta:
   title: Range Slider component
   description: The range slider component is a better visualization of the number input. It is used for gathering a range of numerical user data.
@@ -11,9 +12,9 @@ related:
 
 # Range Sliders
 
-The `v-slider` component is a better visualization of the number input. It is used for gathering numerical user data.
+The `v-range-slider` component complements the `v-slider` component nicely when you are in need of representing a range of values.
 
-<entry-ad />
+<entry />
 
 ## Usage
 
@@ -23,14 +24,17 @@ Sliders reflect a range of values along a bar, from which users may select a sin
 
 ## API
 
-- [v-range-slider](/api/v-range-slider)
-- [v-slider](/api/v-slider)
-
-<inline-api page="components/range-sliders" />
+<api-inline />
 
 ## Examples
 
 ### Props
+
+#### Strict
+
+With the **strict** prop applied, the thumbs of the range slider are not allowed to cross over each other.
+
+<example file="v-range-slider/prop-strict" />
 
 #### Disabled
 
@@ -63,5 +67,3 @@ You can use the **vertical** prop to switch sliders to a vertical orientation. I
 Using the **tick-labels** prop along with the `thumb-label` slot, you can create a very customized solution.
 
 <example file="v-range-slider/slot-thumb-label" />
-
-<backmatter />

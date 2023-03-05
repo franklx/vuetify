@@ -1,9 +1,9 @@
-@import '../tools/_elevation.sass';
+@use '../tools';
 
 $z: 24;
 @while $z >= 0 {
-  .v-application .elevation-#{$z} {
-    @include elevation($z, $important: true);
+  .elevation-#{$z} {
+    @include tools.elevation($z, $important: true);
   }
 
   $z: $z - 1;

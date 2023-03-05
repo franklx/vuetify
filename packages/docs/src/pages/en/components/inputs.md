@@ -1,4 +1,5 @@
 ---
+nav: Custom inputs
 meta:
   title: Input component
   description: The input component is the baseline functionality for all of Vuetify's form components and provides a baseline for custom implementations.
@@ -13,7 +14,7 @@ related:
 
 The `v-input` component gives you a baseline to create your own custom inputs. It consists of a prepend/append slot, messages, and a default slot. It is _recommended_ that you extend this component, but it can be used as a standalone.
 
-<entry-ad />
+<entry />
 
 ## Usage
 
@@ -23,9 +24,7 @@ The `v-input` component gives you a baseline to create your own custom inputs. I
 
 ## API
 
-- [v-input](/api/v-input)
-
-<inline-api page="components/inputs" />
+<api-inline />
 
 ## Caveats
 
@@ -96,5 +95,3 @@ As any validatable Vuetify component, `v-input` can be set to success state usin
 `v-input` has `append` and `prepend` slots. You can place custom icons in them.
 
 <example file="v-input/slot-append-and-prepend" />
-
-<backmatter />

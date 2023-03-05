@@ -1,4 +1,5 @@
 ---
+nav: File inputs
 meta:
   title: File input component
   description: The file input component is a specialized input that provides a clean interface for selecting files, showing detailed selection information and upload progress.
@@ -13,7 +14,7 @@ related:
 
 The `v-file-input` component is a specialized input that provides a clean interface for selecting files, showing detailed selection information and upload progress. It is meant to be a direct replacement for a standard file input.
 
-<entry-ad />
+<entry />
 
 ## Usage
 
@@ -23,9 +24,7 @@ At its core, the `v-file-input` component is a basic container that extends [v-t
 
 ## API
 
-- [v-file-input](/api/v-file-input)
-
-<inline-api page="components/file-inputs" />
+<api-inline />
 
 ## Examples
 
@@ -49,9 +48,9 @@ When using the **show-size** property along with **counter**, the total number o
 
 <example file="v-file-input/prop-counter" />
 
-#### Dense
+#### Density
 
-You can reduces the file input height with `dense` prop.
+You can reduces the file input height with the **density** prop.
 
 <example file="v-file-input/prop-dense" />
 
@@ -63,7 +62,7 @@ The `v-file-input` can contain multiple files at the same time when using the **
 
 #### Prepend icon
 
-The `v-file-input` has a default `prepend-icon` that can be set on the component or adjusted globally. More information on changing global components can be found on the [customizing icons page](/features/icon-fonts).
+The `v-file-input` has a default **prepend-icon** that can be set on the component or adjusted globally. More information on changing global components can be found on the [customizing icons page](/features/icon-fonts).
 
 <example file="v-file-input/prop-prepend-icon" />
 
@@ -94,5 +93,3 @@ Using the `selection` slot, you can customize the appearance of your input selec
 The flexibility of the selection slot allows you accommodate complex use-cases. In this example we show the first 2 selections as chips while adding a number indicator for the remaining amount.
 
 <example file="v-file-input/misc-complex-selection" />
-
-<backmatter />

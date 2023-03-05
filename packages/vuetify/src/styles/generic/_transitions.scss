@@ -1,80 +1,71 @@
+@use '../settings';
+
 @mixin transition-default() {
-  &-enter-active,
+  &-enter-active {
+    transition: 0.3s settings.$standard-easing;
+  }
+
   &-leave-active {
-    transition: $primary-transition !important;
+    transition: 0.3s settings.$standard-easing;
   }
 
   &-move {
-    transition: transform .6s;
+    transition: transform .5s settings.$standard-easing;
   }
 }
 
 // Component specific transitions
-.carousel-transition {
-  &-enter {
-    transform: translate(100%, 0);
+.dialog-transition,
+.dialog-bottom-transition,
+.dialog-top-transition {
+  &-enter-active {
+    transition: 225ms settings.$decelerated-easing
   }
 
-  &-leave, &-leave-to {
-    position: absolute;
-    top: 0;
-    transform: translate(-100%, 0);
-  }
-}
-
-.carousel-reverse-transition {
-  &-enter {
-    transform: translate(-100%, 0);
+  &-leave-active {
+    transition: 125ms settings.$accelerated-easing
   }
 
-  &-leave, &-leave-to {
-    position: absolute;
-    top: 0;
-    transform: translate(100%, 0);
+  &-enter-active,
+  &-leave-active {
+    transition-property: transform, opacity;
+    pointer-events: none;
   }
 }
 
 .dialog-transition {
-  &-enter-active,
-  &-leave-active {
-    pointer-events: none !important;
-  }
-
-  &-enter, &-leave-to {
-    transform: scale(0.5);
+  &-enter-from, &-leave-to {
+    transform: scale(0.9);
     opacity: 0;
   }
 
-  &-enter-to, &-leave {
+  &-enter-to, &-leave-from {
     opacity: 1;
   }
 }
 
 .dialog-bottom-transition {
-  &-enter, &-leave-to {
-    transform: translateY(100%);
+  &-enter-from, &-leave-to {
+    transform: translateY(calc(50vh + 50%));
   }
 }
 
 .dialog-top-transition {
-  &-enter, &-leave-to {
-    transform: translateY(-100%);
+  &-enter-from, &-leave-to {
+    transform: translateY(calc(-50vh - 50%));
   }
 }
 
 .picker-transition,
 .picker-reverse-transition {
-  &-enter-active,
-  &-leave-active {
-    transition: .3s map-get($transition, 'linear-out-slow-in');
-  }
+  @include transition-default();
 
-  &-enter,
+  &-enter-from,
   &-leave-to {
     opacity: 0;
   }
 
-  &-leave,
+  &-leave-from,
   &-leave-active,
   &-leave-to {
     position: absolute !important;
@@ -82,7 +73,9 @@
 }
 
 .picker-transition {
-  &-enter {
+  @include transition-default();
+
+  &-enter-from {
     transform: translate(0, 100%);
   }
 
@@ -92,62 +85,14 @@
 }
 
 .picker-reverse-transition {
-  &-enter {
+  @include transition-default();
+
+  &-enter-from {
     transform: translate(0, -100%);
   }
 
   &-leave-to {
     transform: translate(0, 100%);
-  }
-}
-
-.picker-title-transition {
-  &-enter-to,
-  &-leave {
-    transform: translate(0, 0);
-  }
-
-  &-enter {
-    transform: translate(-100%, 0);
-  }
-
-  &-leave-to {
-    opacity: 0;
-    transform: translate(100%, 0);
-  }
-
-  &-leave,
-  &-leave-to,
-  &-leave-active {
-    position: absolute !important;
-  }
-}
-
-.tab-transition {
-  &-enter {
-    transform: translate(100%, 0);
-  }
-
-  &-leave, &-leave-active {
-    position: absolute;
-    top: 0;
-  }
-
-  &-leave-to {
-    position: absolute;
-    transform: translate(-100%, 0);
-  }
-}
-
-.tab-reverse-transition {
-  &-enter {
-    transform: translate(-100%, 0);
-  }
-
-  &-leave, &-leave-to {
-    top: 0;
-    position: absolute;
-    transform: translate(100%, 0);
   }
 }
 
@@ -163,7 +108,7 @@
 .scale-transition {
   @include transition-default();
 
-  &-enter, &-leave, &-leave-to {
+  &-enter-from, &-leave-from, &-leave-to {
     opacity: 0;
     transform: scale(0);
   }
@@ -172,7 +117,7 @@
 .scale-rotate-transition {
   @include transition-default();
 
-  &-enter, &-leave, &-leave-to {
+  &-enter-from, &-leave, &-leave-to {
     opacity: 0;
     transform: scale(0) rotate(-45deg);
   }
@@ -181,7 +126,7 @@
 .scale-rotate-reverse-transition {
   @include transition-default();
 
-  &-enter, &-leave, &-leave-to {
+  &-enter-from, &-leave-from, &-leave-to {
     opacity: 0;
     transform: scale(0) rotate(45deg);
   }
@@ -190,12 +135,12 @@
 .message-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: translateY(-15px);
   }
 
-  &-leave, &-leave-active {
+  &-leave-from, &-leave-active {
     position: absolute;
   }
 }
@@ -203,7 +148,7 @@
 .slide-y-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: translateY(-15px);
   }
@@ -212,7 +157,7 @@
 .slide-y-reverse-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: translateY(15px);
   }
@@ -221,11 +166,11 @@
 .scroll-y-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
   }
 
-  &-enter {
+  &-enter-from {
     transform: translateY(-15px);
   }
 
@@ -237,11 +182,11 @@
 .scroll-y-reverse-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
   }
 
-  &-enter {
+  &-enter-from {
     transform: translateY(15px);
   }
 
@@ -253,11 +198,11 @@
 .scroll-x-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
   }
 
-  &-enter {
+  &-enter-from {
     transform: translateX(-15px);
   }
 
@@ -269,11 +214,11 @@
 .scroll-x-reverse-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
   }
 
-  &-enter {
+  &-enter-from {
     transform: translateX(15px);
   }
 
@@ -285,7 +230,7 @@
 .slide-x-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: translateX(-15px);
   }
@@ -294,7 +239,7 @@
 .slide-x-reverse-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: translateX(15px);
   }
@@ -303,7 +248,7 @@
 .fade-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0 !important;
   }
 }
@@ -311,7 +256,7 @@
 .fab-transition {
   @include transition-default();
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     transform: scale(0) rotate(-45deg);
   }
 }

@@ -1,11 +1,11 @@
 ---
+disabled: true
 meta:
   title: Frequently asked questions
   description: Stuck on a problem? Check out the most frequently asked questions by the Vuetify community.
   keywords: frequently asked questions, faq
 related:
   - /getting-started/contributing/
-  - /introduction/support/
   - /features/treeshaking/
 ---
 
@@ -13,7 +13,7 @@ related:
 
 Stuck on a particular problem? Check some of these common gotchas before creating a ticket. If you still cannot find what you are looking for, you can submit an [issue](https://issues.vuetifyjs.com/) on GitHub or ask the in our [community](https://community.vuetifyjs.com/).
 
-<promoted-ad slug="vuetify-discord" />
+<promoted slug="vuetify-discord" />
 
 ## Table of Contents
 
@@ -115,8 +115,7 @@ Have a question that belongs here? Tell us in our [Discord Community](https://co
 
   Vuetify components are easily extendable by importing it and using the `extends` option in vue. [Codepen Example](https://codepen.io/whoistobias/pen/yLNgjwy)
 
-```js
-// src/components/ActivateBtn
+```js { resource="src/components/ActivateBtn" }
 import { VBtn } from 'vuetify/lib'
 
 export default {
@@ -141,7 +140,7 @@ export default {
 
 - **My application does not look correct.**{ #my-application-does-not-look-correct }
 
-  Vuetify requires the use of the `v-app` component. It should wrap your entire application and is the center point for much of the framework functionality including themes. Ensure that you are following the proper markup documented in the [Application](/components/application/) page.
+  Vuetify requires the use of the `v-app` component. It should wrap your entire application and is the center point for much of the framework functionality including themes. Ensure that you are following the proper markup documented in the [Application](/features/application-layout/) page.
 
 <br>
 
@@ -159,11 +158,11 @@ export default {
 
   Apply the **fill-height** prop to `v-container`. This helper class normally only adds **height: 100%**, but for the container, it also looks for a child `v-layout` and applies the needed classes to vertically center the content.
 
-<promoted-ad slug="vuetify-reddit" />
+<promoted slug="vuetify-reddit" />
 
 - **My _/_ link is active when I'm on _/home_ page.**{ #link-active-home }
 
-  Add the **exact** to the link that points to absolute /. For more information on this, you can visit the official Vue router [documentation](https://router.vuejs.org/en/api/router-link.html).
+  Add the **exact** to the link that points to absolute /. For more information on this, you can visit the official Vue router [documentation](https://router.vuejs.org/api/#routerlink).
 
 <br>
 
@@ -220,7 +219,7 @@ export default {
 
 - **How do I upgrade to the latest version?**{ #latest-version-upgrade }
 
-  For a detailed guide on how to upgrade to the latest version, navigate to the [Releases and Migrations](/getting-started/releases-and-migrations/) page. In addition, all required changes are noted in the **Upgrade Guide** of all releases.
+  For a detailed guide on how to upgrade to the latest version, navigate to the [Upgrade Guide](/getting-started/upgrade-guide) page. In addition, all required changes are noted in the **Upgrade Guide** of all releases.
 
   **Releases**:
 
@@ -281,8 +280,7 @@ export default {
 
   Update the `compilerOptions` key in `tsconfig.json` with the vuetify type:
 
-```json
-// tsconfig.json
+```json { resource="tsconfig.json" }
 {
   "compilerOptions": {
     "types": ["vuetify"]
@@ -294,14 +292,8 @@ export default {
 
 If you need help with an issue, please use one of our help channels:
 
-- [Vuetify Professional Support](/introduction/support/)
+- [Vuetify Professional Support](/introduction/enterprise-support/)
 - [Discord Community](https://community.vuetifyjs.com/)
 - [GitHub Discussions](https://discussions.vuetifyjs.com/)
 
-<br>
-
-For additional inquiries, please reach out to [John Leider](mailto:john@vuetifyjs.com) or [Heather Leider](mailto:heather@vuetifyjs.com).
-
-<promoted-ad type="theme" />
-
-<backmatter />
+<promoted type="theme" />
