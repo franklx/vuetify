@@ -107,7 +107,7 @@ export const VTextarea = genericComponent<Omit<VInputSlots & VFieldSlots, 'defau
     const messages = computed(() => {
       return props.messages.length
         ? props.messages
-        : (isActive.value || props.persistentHint) ? props.hint : ''
+        : (isFocused.value || props.persistentHint) ? props.hint : ''
     })
 
     function onFocus () {
@@ -137,7 +137,13 @@ export const VTextarea = genericComponent<Omit<VInputSlots & VFieldSlots, 'defau
       })
     }
     function onInput (e: Event) {
-      model.value = (e.target as HTMLTextAreaElement).value
+      const el = e.target as HTMLTextAreaElement
+      const caretPosition = [el.selectionStart, el.selectionEnd]
+      model.value = el.value
+      nextTick(() => {
+        el.selectionStart = caretPosition[0]
+        el.selectionEnd = caretPosition[1]
+      })
     }
 
     const sizerRef = ref<HTMLTextAreaElement>()
