@@ -21,8 +21,8 @@ import { provideDefaults } from '@/composables/defaults'
 import { useBackgroundColor } from '@/composables/color'
 
 // Utilities
-import { computed, ref, toRef } from 'vue'
-import { focusChild, genericComponent, getPropertyFromItem, pick, useRender } from '@/util'
+import { computed, ref, shallowRef, toRef } from 'vue'
+import { focusChild, genericComponent, getPropertyFromItem, pick, propsFactory, useRender } from '@/util'
 
 // Types
 import type { GenericProps } from '@/util'
@@ -77,41 +77,43 @@ function useListItems (props: ItemProps & { itemType: string }) {
   return { items }
 }
 
+export const makeVListProps = propsFactory({
+  activeColor: String,
+  activeClass: String,
+  bgColor: String,
+  disabled: Boolean,
+  lines: {
+    type: [Boolean, String] as PropType<'one' | 'two' | 'three' | false>,
+    default: 'one',
+  },
+  nav: Boolean,
+
+  ...makeNestedProps({
+    selectStrategy: 'single-leaf' as const,
+    openStrategy: 'list' as const,
+  }),
+  ...makeBorderProps(),
+  ...makeComponentProps(),
+  ...makeDensityProps(),
+  ...makeDimensionProps(),
+  ...makeElevationProps(),
+  itemType: {
+    type: String,
+    default: 'type',
+  },
+  ...makeItemsProps(),
+  ...makeRoundedProps(),
+  ...makeTagProps(),
+  ...makeThemeProps(),
+  ...makeVariantProps({ variant: 'text' } as const),
+}, 'v-list')
+
 export const VList = genericComponent<new <T>(props: {
   items?: T[]
 }) => GenericProps<typeof props, VListChildrenSlots<T>>>()({
   name: 'VList',
 
-  props: {
-    activeColor: String,
-    activeClass: String,
-    bgColor: String,
-    disabled: Boolean,
-    lines: {
-      type: [Boolean, String] as PropType<'one' | 'two' | 'three' | false>,
-      default: 'one',
-    },
-    nav: Boolean,
-
-    ...makeNestedProps({
-      selectStrategy: 'single-leaf' as const,
-      openStrategy: 'list' as const,
-    }),
-    ...makeBorderProps(),
-    ...makeComponentProps(),
-    ...makeDensityProps(),
-    ...makeDimensionProps(),
-    ...makeElevationProps(),
-    itemType: {
-      type: String,
-      default: 'type',
-    },
-    ...makeItemsProps(),
-    ...makeRoundedProps(),
-    ...makeTagProps(),
-    ...makeThemeProps(),
-    ...makeVariantProps({ variant: 'text' } as const),
-  },
+  props: makeVListProps(),
 
   emits: {
     'update:selected': (val: unknown[]) => true,
@@ -153,7 +155,7 @@ export const VList = genericComponent<new <T>(props: {
       },
     })
 
-    const isFocused = ref(false)
+    const isFocused = shallowRef(false)
     const contentRef = ref<HTMLElement>()
     function onFocusin (e: FocusEvent) {
       isFocused.value = true
