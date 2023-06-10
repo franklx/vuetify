@@ -1,6 +1,6 @@
 ---
-nav: Selects
 meta:
+  nav: Selects
   title: Select component
   description: The select component provides a list of options that a user can make selections from.
   keywords: selects, vuetify select component, vue select component
@@ -30,23 +30,17 @@ Select fields components are used for collecting user provided information from 
 
 ## Caveats
 
-<alert type="info">
-
+::: info
   Browser autocomplete is set to off by default, may vary by browser and may be ignored. [MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion)
+:::
 
-</alert>
-
-<alert type="warning">
-
+::: warning
   The **auto** property of **menu-props** is only supported for the default input style.
+:::
 
-</alert>
-
-<alert type="error">
-
+::: error
   When using objects for the **items** prop, you must associate **item-title** and **item-value** with existing properties on your objects. These values are defaulted to **title** and **value** and can be changed.
-
-</alert>
+:::
 
 ## Examples
 

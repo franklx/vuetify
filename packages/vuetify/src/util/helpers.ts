@@ -542,6 +542,10 @@ export function includes (arr: readonly any[], val: any) {
 const onRE = /^on[^a-z]/
 export const isOn = (key: string) => onRE.test(key)
 
+export function eventName (propName: string) {
+  return propName[2].toLowerCase() + propName.slice(3)
+}
+
 export type EventProp<T extends any[] = any[], F = (...args: T) => any> = F | F[]
 export const EventProp = <T extends any[] = any[]>() => [Function, Array] as PropType<EventProp<T>>
 
@@ -572,7 +576,7 @@ export function focusChild (el: Element, location?: 'next' | 'prev' | 'first' | 
   const idx = focusable.indexOf(document.activeElement as HTMLElement)
 
   if (!location) {
-    if (!el.contains(document.activeElement)) {
+    if (el === document.activeElement || !el.contains(document.activeElement)) {
       focusable[0]?.focus()
     }
   } else if (location === 'first') {

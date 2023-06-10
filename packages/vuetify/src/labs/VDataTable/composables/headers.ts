@@ -1,5 +1,5 @@
 // Utilities
-import { inject, provide, ref, watch } from 'vue'
+import { inject, provide, ref, watchEffect } from 'vue'
 import { createRange, propsFactory } from '@/util'
 
 // Types
@@ -12,7 +12,7 @@ export const makeDataTableHeaderProps = propsFactory({
     type: Array as PropType<DeepReadonly<DataTableHeader[] | DataTableHeader[][]>>,
     default: () => ([]),
   },
-}, 'v-data-table-header')
+}, 'DataTable-header')
 
 export const VDataTableHeadersSymbol: InjectionKey<{
   headers: Ref<InternalDataTableHeader[][]>
@@ -34,7 +34,7 @@ export function createHeaders (
   const headers = ref<InternalDataTableHeader[][]>([])
   const columns = ref<InternalDataTableHeader[]>([])
 
-  watch(() => props.headers, () => {
+  watchEffect(() => {
     const wrapped = !props.headers.length
       ? []
       : Array.isArray(props.headers[0])
@@ -104,9 +104,6 @@ export function createHeaders (
     })
 
     columns.value = fixedRows.at(-1) ?? []
-  }, {
-    deep: true,
-    immediate: true,
   })
 
   const data = { headers, columns }

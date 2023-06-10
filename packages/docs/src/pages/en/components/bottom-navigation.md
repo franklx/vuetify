@@ -1,6 +1,6 @@
 ---
-nav: Bottom navigation
 meta:
+  nav: Bottom navigation
   title: Bottom navigation component
   description: The bottom navigation component is used for mobile devices and acts as the primary navigation for your application.
   keywords: bottom navigation, vuetify bottom navigation component, vue bottom navigation component
@@ -75,11 +75,9 @@ Modify the **scroll-threshold** property to increase the distance a user must sc
 
 The **shift** prop hides button text when not active. This provides an alternative visual style to the `v-bottom-navigation` component.
 
-<alert type="info">
-
+::: info
   For this to work, `v-btn` text is **required** to be wrapped in a `span` tag.
-
-</alert>
+:::
 
 <example file="v-bottom-navigation/prop-shift" />
 

@@ -1,6 +1,6 @@
 ---
-nav: Images
 meta:
+  nav: Images
   title: Image component
   description: The image component provides a flexible interface for displaying different types of images.
   keywords: images, vuetify image component, vue image component
@@ -34,12 +34,10 @@ The `v-img` component is packed with features to support rich media. Combined wi
 
 ## Caveats
 
-<alert type="warning">
-
+::: warning
   The **lazy-src** property has no effect unless either **height** or **aspect-ratio** are provided. This is because
   the image container needs a non-zero height in order for the temporary image to be shown.
-
-</alert>
+:::
 
 ## Examples
 
