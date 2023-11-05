@@ -70,6 +70,7 @@ Due to the massive differences in display and functionality between horizontal a
 | Component | Description |
 | - | - |
 | [v-stepper](/api/v-stepper/) | Primary Component |
+| [v-stepper-actions](/api/v-stepper-actions/) | Actions for stepper |
 | [v-stepper-header](/api/v-stepper-header/) | Container for stepper items |
 | [v-stepper-item](/api/v-stepper-item/) | Primary Component |
 | [v-stepper-window](/api/v-stepper-window/) | Window container for stepper window items |
@@ -85,7 +86,7 @@ The recommended placement of elements inside of `v-stepper` is:
 * Place `v-stepper-window` or other forms of content below the stepper header
 * Place `v-stepper-actions` after the stepper window
 
-![Pending graphic](https://cdn.vuetifyjs.com/docs/images/components/v-stepper/v-stepper-anatomy.png "Stepper Anatomy"){ height=500 }
+![Pending graphic](https://cdn.vuetifyjs.com/docs/images/components/v-stepper/v-stepper-anatomy.png "Stepper Anatomy")
 
 | Element / Area | Description |
 | - | - |
