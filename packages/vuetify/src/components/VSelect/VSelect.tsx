@@ -3,6 +3,7 @@ import './VSelect.sass'
 
 // Components
 import { VDialogTransition } from '@/components/transitions'
+import { VAvatar } from '@/components/VAvatar'
 import { VCheckboxBtn } from '@/components/VCheckbox'
 import { VChip } from '@/components/VChip'
 import { VDefaultsProvider } from '@/components/VDefaultsProvider'
@@ -67,6 +68,9 @@ export const makeSelectProps = propsFactory({
   eager: Boolean,
   hideNoData: Boolean,
   hideSelected: Boolean,
+  listProps: {
+    type: Object as PropType<VList['$props']>,
+  },
   menu: Boolean,
   menuIcon: {
     type: IconValue,
@@ -90,7 +94,7 @@ export const makeVSelectProps = propsFactory({
   ...makeSelectProps(),
   ...omit(makeVTextFieldProps({
     modelValue: null,
-    role: 'button',
+    role: 'combobox',
   }), ['validationValue', 'dirty', 'appendInnerIcon']),
   ...makeTransitionProps({ transition: { component: VDialogTransition as Component } }),
 }, 'VSelect')
@@ -157,6 +161,11 @@ export const VSelect = genericComponent<new <
         return props.multiple ? transformed : (transformed[0] ?? null)
       }
     )
+    const counterValue = computed(() => {
+      return typeof props.counterValue === 'function' ? props.counterValue(model.value)
+        : typeof props.counterValue === 'number' ? props.counterValue
+        : model.value.length
+    })
     const form = useForm()
     const selectedValues = computed(() => model.value.map(selection => selection.value))
     const isFocused = shallowRef(false)
@@ -173,9 +182,19 @@ export const VSelect = genericComponent<new <
     })
 
     const menuDisabled = computed(() => (
-      (props.hideNoData && !items.value.length) ||
+      (props.hideNoData && !displayItems.value.length) ||
       props.readonly || form?.isReadonly.value
     ))
+
+    const computedMenuProps = computed(() => {
+      return {
+        ...props.menuProps,
+        activatorProps: {
+          ...(props.menuProps?.activatorProps || {}),
+          'aria-haspopup': 'listbox', // Set aria-haspopup to 'listbox'
+        },
+      }
+    })
 
     const listRef = ref<VList>()
     const { onListScroll, onListKeydown } = useScrolling(listRef, vTextFieldRef)
@@ -285,6 +304,18 @@ export const VSelect = genericComponent<new <
       }
     })
 
+    watch(displayItems, (val, oldVal) => {
+      if (!isFocused.value) return
+
+      if (!val.length && props.hideNoData) {
+        menu.value = false
+      }
+
+      if (!oldVal.length && val.length) {
+        menu.value = true
+      }
+    })
+
     useRender(() => {
       const hasChips = !!(props.chips || slots.chip)
       const hasList = !!(
@@ -310,7 +341,7 @@ export const VSelect = genericComponent<new <
           onUpdate:modelValue={ onModelUpdate }
           v-model:focused={ isFocused.value }
           validationValue={ model.externalValue }
-          counterValue={ model.value.length }
+          counterValue={ counterValue.value }
           dirty={ isDirty }
           class={[
             'v-select',
@@ -349,7 +380,7 @@ export const VSelect = genericComponent<new <
                   closeOnContentClick={ false }
                   transition={ props.transition }
                   onAfterLeave={ onAfterLeave }
-                  { ...props.menuProps }
+                  { ...computedMenuProps.value }
                 >
                   { hasList && (
                     <VList
@@ -361,7 +392,9 @@ export const VSelect = genericComponent<new <
                       onFocusin={ onFocusin }
                       onScrollPassive={ onListScroll }
                       tabindex="-1"
+                      aria-live="polite"
                       color={ props.itemColor ?? props.color }
+                      { ...props.listProps }
                     >
                       { slots['prepend-item']?.() }
 
@@ -382,7 +415,7 @@ export const VSelect = genericComponent<new <
                             index,
                             props: itemProps,
                           }) ?? (
-                            <VListItem { ...itemProps }>
+                            <VListItem { ...itemProps } role="option">
                               {{
                                 prepend: ({ isSelected }) => (
                                   <>
@@ -394,6 +427,10 @@ export const VSelect = genericComponent<new <
                                         tabindex="-1"
                                       />
                                     ) : undefined }
+
+                                    { item.props.prependAvatar && (
+                                      <VAvatar image={ item.props.prependAvatar } />
+                                    )}
 
                                     { item.props.prependIcon && (
                                       <VIcon icon={ item.props.prependIcon } />

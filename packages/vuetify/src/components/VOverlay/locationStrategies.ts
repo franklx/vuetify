@@ -83,21 +83,17 @@ export function useLocationStrategies (
     useToggleScope(() => !!(data.isActive.value && props.locationStrategy), reset => {
       watch(() => props.locationStrategy, reset)
       onScopeDispose(() => {
+        window.removeEventListener('resize', onResize)
         updateLocation.value = undefined
       })
+
+      window.addEventListener('resize', onResize, { passive: true })
 
       if (typeof props.locationStrategy === 'function') {
         updateLocation.value = props.locationStrategy(data, props, contentStyles)?.updateLocation
       } else {
         updateLocation.value = locationStrategies[props.locationStrategy](data, props, contentStyles)?.updateLocation
       }
-    })
-
-    window.addEventListener('resize', onResize, { passive: true })
-
-    onScopeDispose(() => {
-      window.removeEventListener('resize', onResize)
-      updateLocation.value = undefined
     })
   }
 
@@ -229,9 +225,7 @@ function connectedLocationStrategy (data: LocationStrategyData, props: StrategyP
   // eslint-disable-next-line max-statements
   function updateLocation () {
     observe = false
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => observe = true)
-    })
+    requestAnimationFrame(() => observe = true)
 
     if (!data.target.value || !data.contentEl.value) return
 

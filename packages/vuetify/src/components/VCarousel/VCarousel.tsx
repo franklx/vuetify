@@ -79,7 +79,7 @@ export const VCarousel = genericComponent<new <T>(
   setup (props, { slots }) {
     const model = useProxiedModel(props, 'modelValue')
     const { t } = useLocale()
-    const windowRef = ref<typeof VWindow>()
+    const windowRef = ref<VWindow>()
 
     let slideTimeout = -1
     watch(model, restartTimeout)
@@ -151,7 +151,10 @@ export const VCarousel = genericComponent<new <T>(
                           const props = {
                             id: `carousel-item-${item.id}`,
                             'aria-label': t('$vuetify.carousel.ariaLabel.delimiter', index + 1, group.items.value.length),
-                            class: [group.isSelected(item.id) && 'v-btn--active'],
+                            class: [
+                              'v-carousel__controls__item',
+                              group.isSelected(item.id) && 'v-btn--active',
+                            ],
                             onClick: () => group.select(item.id, true),
                           }
 

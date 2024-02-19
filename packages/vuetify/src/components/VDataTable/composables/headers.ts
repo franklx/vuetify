@@ -179,7 +179,7 @@ function parse (items: InternalDataTableHeader[], maxDepth: number) {
       if (item.children) {
         for (const child of item.children) {
           // This internally sorts items that are on the same priority "row"
-          const sort = priority % 1 + (fraction / Math.pow(10, currentDepth + 1))
+          const sort = priority % 1 + (fraction / Math.pow(10, currentDepth + 2))
           queue.enqueue(child, currentDepth + diff + sort)
         }
       }
@@ -226,8 +226,9 @@ export function createHeaders (
 ) {
   const headers = ref<InternalDataTableHeader[][]>([])
   const columns = ref<InternalDataTableHeader[]>([])
-  const sortFunctions = ref<Record<string, DataTableCompareFunction>>()
-  const filterFunctions = ref<FilterKeyFunctions>()
+  const sortFunctions = ref<Record<string, DataTableCompareFunction>>({})
+  const sortRawFunctions = ref<Record<string, DataTableCompareFunction>>({})
+  const filterFunctions = ref<FilterKeyFunctions>({})
 
   watchEffect(() => {
     const _headers = props.headers ||
@@ -260,22 +261,26 @@ export function createHeaders (
 
     const flatHeaders = parsed.headers.flat(1)
 
-    sortFunctions.value = flatHeaders.reduce((acc, header) => {
-      if (header.sortable && header.key && header.sort) {
-        acc[header.key] = header.sort
-      }
-      return acc
-    }, {} as Record<string, DataTableCompareFunction>)
+    for (const header of flatHeaders) {
+      if (!header.key) continue
 
-    filterFunctions.value = flatHeaders.reduce((acc, header) => {
-      if (header.key && header.filter) {
-        acc[header.key] = header.filter
+      if (header.sortable) {
+        if (header.sort) {
+          sortFunctions.value[header.key] = header.sort
+        }
+
+        if (header.sortRaw) {
+          sortRawFunctions.value[header.key] = header.sortRaw
+        }
       }
-      return acc
-    }, {} as FilterKeyFunctions)
+
+      if (header.filter) {
+        filterFunctions.value[header.key] = header.filter
+      }
+    }
   })
 
-  const data = { headers, columns, sortFunctions, filterFunctions }
+  const data = { headers, columns, sortFunctions, sortRawFunctions, filterFunctions }
 
   provide(VDataTableHeadersSymbol, data)
 

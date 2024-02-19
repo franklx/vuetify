@@ -5,6 +5,7 @@ import './VDataTable.sass'
 import { makeVDataTableFooterProps, VDataTableFooter } from './VDataTableFooter'
 import { makeVDataTableHeadersProps, VDataTableHeaders } from './VDataTableHeaders'
 import { makeVDataTableRowsProps, VDataTableRows } from './VDataTableRows'
+import { VDivider } from '@/components/VDivider'
 import { makeVTableProps, VTable } from '@/components/VTable/VTable'
 
 // Composables
@@ -118,6 +119,7 @@ export const VDataTable = genericComponent<new <T extends readonly any[], V>(
     'update:options': (value: any) => true,
     'update:groupBy': (value: any) => true,
     'update:expanded': (value: any) => true,
+    'update:currentItems': (value: any) => true,
   },
 
   setup (props, { attrs, slots }) {
@@ -125,7 +127,13 @@ export const VDataTable = genericComponent<new <T extends readonly any[], V>(
     const { sortBy, multiSort, mustSort } = createSort(props)
     const { page, itemsPerPage } = createPagination(props)
 
-    const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props, {
+    const {
+      columns,
+      headers,
+      sortFunctions,
+      sortRawFunctions,
+      filterFunctions,
+    } = createHeaders(props, {
       groupBy,
       showSelect: toRef(props, 'showSelect'),
       showExpand: toRef(props, 'showExpand'),
@@ -142,7 +150,7 @@ export const VDataTable = genericComponent<new <T extends readonly any[], V>(
     const { toggleSort } = provideSort({ sortBy, multiSort, mustSort, page })
     const { sortByWithGroups, opened, extractRows, isGroupOpen, toggleGroup } = provideGroupBy({ groupBy, sortBy })
 
-    const { sortedItems } = useSortedItems(props, filteredItems, sortByWithGroups, sortFunctions)
+    const { sortedItems } = useSortedItems(props, filteredItems, sortByWithGroups, sortFunctions, sortRawFunctions)
     const { flatItems } = useGroupedItems(sortedItems, groupBy, opened)
     const itemsLength = computed(() => flatItems.value.length)
 
@@ -252,6 +260,8 @@ export const VDataTable = genericComponent<new <T extends readonly any[], V>(
             ),
             bottom: () => slots.bottom ? slots.bottom(slotProps.value) : (
               <>
+                <VDivider />
+
                 <VDataTableFooter
                   { ...dataTableFooterProps }
                   v-slots={{
